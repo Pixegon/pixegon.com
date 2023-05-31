@@ -13,20 +13,20 @@ service:
 
 
       We work with you and your team during the discovery to make your products user experience stand out. Then we’ll bring your idea to life with wireframes and interactive prototypes. To ensure that time isn’t waisted in the development of your product. 
-    image: images/service/ui-ux.svg
+    image: images/service/design.png
   - content: >
       #### Mobile App Development 
 
       Mobile applications are the new frontier of the media content and gaming world. It’s time to upgrade your system to offer the best user experience that goes beyond the desktop. Based on your user demographic, we can create a custom, native iOS, Android, or cross-platform web app. Multi-device support across manufacturers, screen resolutions and operating systems. 
-    image: images/service/web.svg
+    image: images/service/app.png
   - content: >
       #### Web Development
 
       We build custom web applications that are scalable, responsive, and secure. We can build your web application from the ground up, or we can take your existing web application and improve it. We can also help you with your web hosting needs.
-    image: images/service/web.svg
+    image: images/service/backend.png
   - content: >
       #### Cloud Operations
 
       Traditional IT is being transformed by Cloud innovations. Pixegon has ground up experience in implementing Cloud Infrastructure to meet technical and cultural requirements. 
-    image: images/service/web.svg
+    image: images/service/CloudOperation.jpg
   

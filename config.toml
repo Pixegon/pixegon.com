@@ -39,13 +39,13 @@ weight = 3
 blogPageURL = "blog"
 contactLink = "contact"
 copyright = "All right reserved copyright © Pixegon Inc. 2023"
-footerLogo = "images/site-navigation/logo.png"
+footerLogo = "images/site-navigation/pix-white.png"
 #googleAnalytics = "YOUR GOOGLE ANALYTICS CODE"
 logo = "images/site-navigation/logo.png"
 
 [params.address]
 address = "Corrales, New Mexico, USA"
-email = "info@pixegon.com"
+email = "support@pixegon.com"
 openingHours = "Open from 10am to 6pm (close at 5pm Sundays)"
 phone = "+1 (505) 750-8732"
 

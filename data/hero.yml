@@ -1,0 +1,11 @@
+---
+enable: true
+topTitle: Hey, we're Pixegon,
+content: >
+  and we're a team of passionate designers and developers who love to build meaningful software.
+
+
+  Let use help you with your next web or mobile app project.
+buttonName: Contact us
+buttonURL: contact
+image: images/hero/iphone-code.jpeg

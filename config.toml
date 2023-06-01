@@ -1,6 +1,6 @@
 baseURL = "https://pixegon.com/"
 languageCode = "en-us"
-paginate = 6
+paginate = 7
 theme = "portio"
 title = "Portio"
 # Main Menu

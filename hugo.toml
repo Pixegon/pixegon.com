@@ -2,7 +2,7 @@ baseURL = "https://pixegon.com/"
 languageCode = "en-us"
 paginate = 6
 theme = "portio"
-title = "Portio"
+title = "Albuquerque App Developer | Pixegon"
 # Main Menu
 [[menu.main]]
 name = "Home"

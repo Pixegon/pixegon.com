@@ -789,30 +789,33 @@ footer {
         <span class="cdet-val"><span class="status-dot"></span>Currently accepting new projects</span>
       </div>
     </div>
-    <form class="contact-form rev d3" onsubmit="handleSub(event)">
+    <form class="contact-form rev d3" name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" onsubmit="handleSub(event)">
+      <input type="hidden" name="form-name" value="contact">
+      <p style="display:none"><input name="bot-field"></p>
       <div class="fg">
         <label>Your Name</label>
-        <input type="text" placeholder="Jane Smith">
+        <input type="text" name="name" placeholder="Jane Smith">
       </div>
       <div class="fg">
         <label>Email Address</label>
-        <input type="email" placeholder="jane@company.com">
+        <input type="email" name="email" placeholder="jane@company.com">
       </div>
       <div class="fg">
         <label>Project Type</label>
-        <select>
+        <select name="project-type">
           <option value="" disabled selected>Select a service...</option>
           <option>Web Application</option>
           <option>Mobile App</option>
           <option>Cloud / Infrastructure</option>
           <option>UI/UX Design</option>
+          <option>AI Integration</option>
           <option>Full-Stack Build</option>
           <option>Other</option>
         </select>
       </div>
       <div class="fg">
         <label>Tell Us About Your Project</label>
-        <textarea placeholder="What are you building? What problem does it solve? What's your timeline?"></textarea>
+        <textarea name="message" placeholder="What are you building? What problem does it solve? What's your timeline?"></textarea>
       </div>
       <button type="submit" class="btn-sub" id="subBtn">Send Message →</button>
     </form>
@@ -867,15 +870,31 @@ mt.innerHTML = mt.innerHTML + mt.innerHTML;
 // ── FORM ──
 function handleSub(e) {
   e.preventDefault();
+  const form = e.target;
   const b = document.getElementById('subBtn');
-  b.textContent = 'Sent! We\'ll be in touch ✓';
-  b.style.background = 'var(--green)';
-  b.style.color = 'var(--bg0)';
-  setTimeout(() => {
-    b.textContent = 'Send Message →';
-    b.style.background = 'var(--brand)';
-    e.target.reset();
-  }, 4000);
+  b.textContent = 'Sending…';
+  b.disabled = true;
+  fetch('/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams(new FormData(form)).toString()
+  })
+  .then(() => {
+    b.textContent = 'Sent! We\'ll be in touch ✓';
+    b.style.background = 'var(--green)';
+    b.style.color = 'var(--bg0)';
+    form.reset();
+    setTimeout(() => {
+      b.textContent = 'Send Message →';
+      b.style.background = 'var(--brand)';
+      b.disabled = false;
+    }, 4000);
+  })
+  .catch(() => {
+    b.textContent = 'Something went wrong — try emailing us';
+    b.style.background = 'var(--warm)';
+    b.disabled = false;
+  });
 }
 </script>
 </body>

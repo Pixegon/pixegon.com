@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pixegon — Full-Stack Software Consultancy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --brand:      #27aae1;
+  --brand-dim:  rgba(39,170,225,0.1);
+  --brand-glow: rgba(39,170,225,0.25);
+  --purple:     #5d78ff;
+  --purple-dim: rgba(93,120,255,0.1);
+  --bg0: #070b14;
+  --bg1: #0c1220;
+  --bg2: #111829;
+  --border: #1a2440;
+  --border-hi: #243358;
+  --t0: #edf2ff;
+  --t1: #8fa8cc;
+  --t2: #4a607a;
+  --green: #00e5a0;
+  --warm:  #ff6b35;
+  --ff-display: 'Plus Jakarta Sans', sans-serif;
+  --ff-body:    'Outfit', sans-serif;
+  --r: 10px;
+  --r-sm: 6px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--ff-body);
+  background: var(--bg0);
+  color: var(--t0);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── NAV ── */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:1000;
+  display:flex; align-items:center; justify-content:space-between;
+  height:68px; padding:0 48px;
+  border-bottom:1px solid transparent;
+  transition:background .3s, border-color .3s;
+}
+nav.scrolled {
+  background:rgba(7,11,20,.88);
+  backdrop-filter:blur(24px);
+  border-bottom-color:var(--border);
+}
+.nav-brand {
+  display:flex; align-items:center; gap:10px;
+  text-decoration:none;
+}
+.nav-brand img { height:36px; filter:brightness(0) invert(1); }
+.nav-links { display:flex; align-items:center; gap:36px; list-style:none; }
+.nav-links a {
+  font-family:var(--ff-body); font-size:12px; color:var(--t1);
+  text-decoration:none; letter-spacing:.06em; transition:color .2s;
+}
+.nav-links a:hover { color:var(--brand); }
+a.nav-cta {
+  padding:9px 22px; background:var(--brand); color:#000;
+  border-radius:var(--r-sm); font-weight:700; letter-spacing:0;
+  transition:box-shadow .2s, transform .2s;
+}
+a.nav-cta:hover { color:#000; box-shadow:0 6px 24px var(--brand-glow); transform:translateY(-1px); }
+
+/* ── HERO ── */
+#hero {
+  position:relative; min-height:100vh;
+  display:flex; align-items:center; overflow:hidden;
+}
+.hero-glow {
+  position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(ellipse 70% 60% at 50% 55%, rgba(39,170,225,.07) 0%, transparent 70%);
+}
+.hero-content {
+  position:relative; z-index:1;
+  max-width:1240px; margin:0 auto; padding:140px 48px 60px;
+  width:100%;
+}
+.hero-eyebrow {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:5px 14px;
+  background:var(--brand-dim); border:1px solid rgba(39,170,225,.2);
+  border-radius:100px;
+  font-family:var(--ff-body); font-size:11px; color:var(--brand);
+  letter-spacing:.1em; text-transform:uppercase; margin-bottom:32px;
+}
+.hero-eyebrow-dot {
+  width:5px; height:5px; background:var(--brand); border-radius:50%;
+  animation:blink 2s ease-in-out infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+h1 {
+  font-family:var(--ff-display);
+  font-size:clamp(50px, 7vw, 100px);
+  font-weight:800; line-height:1.0; letter-spacing:-.04em;
+  color:var(--t0); margin-bottom:28px; max-width:860px;
+}
+h1 em { font-style:normal; color:var(--brand); }
+
+.hero-sub {
+  font-size:clamp(16px, 1.8vw, 20px); color:var(--t1);
+  max-width:520px; line-height:1.75; font-weight:300; margin-bottom:48px;
+}
+.hero-btns { display:flex; gap:14px; flex-wrap:wrap; }
+
+.btn-p {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:14px 28px; background:var(--brand); color:var(--bg0);
+  text-decoration:none; border-radius:var(--r-sm); font-weight:600; font-size:15px;
+  transition:all .2s;
+}
+.btn-p:hover { background:#1e9dce; transform:translateY(-2px); box-shadow:0 10px 32px var(--brand-glow); }
+.btn-s {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:14px 28px; background:transparent; color:var(--t0);
+  text-decoration:none; border-radius:var(--r-sm); border:1px solid var(--border-hi);
+  font-weight:500; font-size:15px; transition:all .2s;
+}
+.btn-s:hover { border-color:var(--brand); color:var(--brand); transform:translateY(-2px); }
+
+.hero-metrics {
+  display:flex; gap:56px; flex-wrap:wrap;
+  margin-top:80px; padding-top:48px; border-top:1px solid var(--border);
+}
+.hm-item { display:flex; flex-direction:column; gap:4px; }
+.hm-num {
+  font-family:var(--ff-display); font-size:40px; font-weight:800;
+  color:var(--t0); letter-spacing:-.04em; line-height:1;
+}
+.hm-num span { color:var(--brand); }
+.hm-lbl {
+  font-family:var(--ff-body); font-size:11px; color:var(--t2);
+  text-transform:uppercase; letter-spacing:.08em;
+}
+
+
+/* ── CLIENTS ── */
+#clients {
+  padding:72px 0; overflow:hidden;
+  border-top:1px solid var(--border); border-bottom:1px solid var(--border);
+}
+.clients-lbl {
+  text-align:center; font-family:var(--ff-body); font-size:11px;
+  color:var(--t2); text-transform:uppercase; letter-spacing:.14em; margin-bottom:44px;
+}
+.marquee-outer { position:relative; overflow:hidden; }
+.marquee-outer::before, .marquee-outer::after {
+  content:''; position:absolute; top:0; bottom:0; width:180px; z-index:2; pointer-events:none;
+}
+.marquee-outer::before { left:0; background:linear-gradient(to right, var(--bg0), transparent); }
+.marquee-outer::after  { right:0; background:linear-gradient(to left, var(--bg0), transparent); }
+.marquee-track {
+  display:flex; gap:72px; width:max-content;
+  animation:scroll 32s linear infinite;
+}
+.marquee-track:hover { animation-play-state:paused; }
+@keyframes scroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+.client-chip {
+  display:flex; align-items:center; gap:14px; opacity:.4; transition:opacity .3s;
+  white-space:nowrap; cursor:default;
+}
+.client-chip:hover { opacity:1; }
+.client-chip img {
+  height:28px; max-width:110px; object-fit:contain;
+  filter:brightness(0) invert(1);
+}
+.client-chip-name {
+  font-family:var(--ff-display); font-size:16px; font-weight:600;
+  color:var(--t0); letter-spacing:-.01em;
+}
+
+/* ── SECTION SHARED ── */
+.section-tag {
+  display:inline-flex; align-items:center; gap:6px;
+  font-family:var(--ff-body); font-size:11px; color:var(--brand);
+  text-transform:uppercase; letter-spacing:.1em; margin-bottom:18px;
+}
+.section-tag::before { content:'//'; opacity:.45; }
+h2 {
+  font-family:var(--ff-display); font-size:clamp(34px, 5vw, 62px);
+  font-weight:800; line-height:1.05; letter-spacing:-.035em;
+  color:var(--t0); margin-bottom:16px;
+}
+.section-lead {
+  font-size:18px; color:var(--t1); max-width:520px;
+  line-height:1.75; font-weight:300; margin-bottom:64px;
+}
+.section-lead.no-mb { margin-bottom:0; }
+.mt-stats { margin-top:56px; }
+
+/* ── SERVICES ── */
+#services { padding:120px 48px; max-width:1240px; margin:0 auto; }
+.svc-grid {
+  display:grid; grid-template-columns:repeat(2,1fr);
+  gap:2px; background:var(--border);
+  border:1px solid var(--border); border-radius:var(--r); overflow:hidden;
+}
+.svc-card {
+  background:var(--bg1); padding:52px 48px;
+  position:relative; overflow:hidden; transition:background .3s;
+}
+.svc-card::before {
+  content:''; position:absolute; inset:0;
+  background:var(--brand-dim); opacity:0; transition:opacity .3s;
+}
+.svc-card:hover { background:var(--bg2); }
+.svc-card:hover::before { opacity:1; }
+.svc-n {
+  font-family:var(--ff-body); font-size:11px; color:var(--brand);
+  letter-spacing:.1em; margin-bottom:28px; opacity:.6;
+}
+.svc-ico { width:44px; height:44px; margin-bottom:24px; position:relative; z-index:1; }
+.svc-ico svg { width:100%; height:100%; }
+.svc-title {
+  font-family:var(--ff-display); font-size:22px; font-weight:700;
+  color:var(--t0); margin-bottom:14px; letter-spacing:-.02em; position:relative; z-index:1;
+}
+.svc-desc {
+  font-size:15px; color:var(--t1); line-height:1.75;
+  font-weight:300; position:relative; z-index:1;
+}
+.svc-card.svc-full { grid-column:1 / -1; }
+.svc-card.svc-full .svc-chips { max-width:640px; }
+.svc-chips {
+  display:flex; flex-wrap:wrap; gap:7px; margin-top:24px; position:relative; z-index:1;
+}
+.chip {
+  padding:4px 12px; background:var(--bg0); border:1px solid var(--border);
+  border-radius:100px; font-family:var(--ff-body); font-size:10px; color:var(--t2);
+  letter-spacing:.04em;
+}
+
+/* ── STACK ── */
+#stack {
+  padding:120px 48px;
+  background:var(--bg1);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+.stack-inner { max-width:1240px; margin:0 auto; }
+.stack-top {
+  display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:end; margin-bottom:72px;
+}
+.code-snippet {
+  background:var(--bg0); border:1px solid var(--border-hi);
+  border-radius:var(--r); padding:28px 32px;
+  font-family:var(--ff-body); font-size:13px; line-height:1.9;
+}
+.cs-comment { color:var(--t2); }
+.cs-kw  { color:var(--brand); }
+.cs-fn  { color:var(--purple); }
+.cs-str { color:var(--green); }
+.cs-num { color:var(--warm); }
+.cs-brace { color:var(--t1); }
+
+.stack-cats { display:flex; flex-direction:column; gap:36px; }
+.stack-cat-lbl {
+  font-family:var(--ff-body); font-size:10px; color:var(--t2);
+  text-transform:uppercase; letter-spacing:.14em; margin-bottom:10px;
+}
+.pills { display:flex; flex-wrap:wrap; gap:8px; }
+.pill {
+  padding:7px 15px; border:1px solid var(--border-hi); border-radius:100px;
+  font-size:13px; font-family:var(--ff-body); color:var(--t1);
+  background:var(--bg0); transition:all .2s; cursor:default;
+}
+.pill:hover, .pill.hi {
+  border-color:var(--brand); color:var(--brand); background:var(--brand-dim);
+}
+.pill.hi2 {
+  border-color:var(--purple); color:var(--purple); background:var(--purple-dim);
+}
+
+/* ── STATS ── */
+#stats { padding:120px 48px; max-width:1240px; margin:0 auto; }
+.stat-grid {
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:2px; background:var(--border);
+  border:1px solid var(--border); border-radius:var(--r); overflow:hidden;
+}
+.stat-card {
+  background:var(--bg1); padding:52px 40px; text-align:center; position:relative;
+}
+.stat-card::after {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(to right, transparent, var(--brand), transparent);
+  transform:scaleX(0); transition:transform .5s ease;
+}
+.stat-card:hover::after { transform:scaleX(1); }
+.stat-n {
+  font-family:var(--ff-display); font-size:clamp(48px, 5vw, 72px);
+  font-weight:800; color:var(--t0); letter-spacing:-.05em; line-height:1;
+  margin-bottom:12px;
+}
+.stat-n b { color:var(--brand); font-weight:800; }
+.stat-l {
+  font-family:var(--ff-body); font-size:11px; color:var(--t2);
+  text-transform:uppercase; letter-spacing:.1em;
+}
+
+/* ── ABOUT ── */
+#about {
+  padding:120px 48px;
+  background:var(--bg1);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+.about-inner {
+  max-width:1240px; margin:0 auto;
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:88px; align-items:center;
+}
+.about-vis { position:relative; }
+.about-frame {
+  position:relative; border-radius:var(--r);
+  aspect-ratio:4/3; background:var(--bg2);
+  border:1px solid var(--border-hi); overflow:hidden;
+}
+.about-badge {
+  position:absolute; top:-18px; right:-18px;
+  width:148px; height:148px; background:var(--bg0);
+  border:1px solid var(--border-hi); border-radius:var(--r);
+  display:flex; flex-direction:column; align-items:center;
+  justify-content:center; gap:6px; z-index:2;
+}
+.about-badge-lbl { font-family:var(--ff-body); font-size:10px; color:var(--t2); text-transform:uppercase; letter-spacing:.08em; }
+.about-badge-yr {
+  font-family:var(--ff-display); font-size:44px; font-weight:800;
+  color:var(--t0); letter-spacing:-.04em; line-height:1;
+}
+.about-loc {
+  position:absolute; bottom:20px; left:20px;
+  display:flex; align-items:center; gap:8px;
+  padding:8px 16px;
+  background:rgba(7,11,20,.85); backdrop-filter:blur(14px);
+  border:1px solid var(--border-hi); border-radius:100px;
+  font-family:var(--ff-body); font-size:11px; color:var(--t1);
+}
+.about-loc svg { color:var(--brand); flex-shrink:0; }
+.about-body { font-size:16px; color:var(--t1); line-height:1.85; font-weight:300; margin-bottom:18px; }
+.about-vals { display:flex; flex-direction:column; gap:16px; margin-top:36px; }
+.val { display:flex; gap:14px; align-items:flex-start; }
+.val-dot { width:7px; height:7px; background:var(--brand); border-radius:50%; flex-shrink:0; margin-top:8px; }
+.val-txt { font-size:15px; color:var(--t1); line-height:1.65; }
+.val-txt strong { color:var(--t0); font-weight:600; }
+
+/* ── CONTACT ── */
+#contact { padding:120px 48px; max-width:1240px; margin:0 auto; }
+.contact-grid {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:88px; align-items:start; margin-top:64px;
+}
+.contact-lead { font-size:17px; color:var(--t1); line-height:1.85; font-weight:300; margin-bottom:40px; }
+.cdet { display:flex; flex-direction:column; gap:5px; margin-bottom:28px; }
+.cdet-lbl { font-family:var(--ff-body); font-size:10px; color:var(--t2); text-transform:uppercase; letter-spacing:.1em; }
+.cdet-val { font-size:16px; color:var(--t0); font-weight:500; }
+.cdet-val a { color:var(--brand); text-decoration:none; }
+.cdet-val a:hover { text-decoration:underline; }
+.status-dot { display:inline-block; width:7px; height:7px; background:var(--green); border-radius:50%; margin-right:7px; animation:blink 2s infinite; }
+
+.contact-form { display:flex; flex-direction:column; gap:18px; }
+.fg { display:flex; flex-direction:column; gap:7px; }
+.fg label { font-family:var(--ff-body); font-size:10px; color:var(--t2); text-transform:uppercase; letter-spacing:.1em; }
+.fg input, .fg textarea, .fg select {
+  padding:13px 16px; background:var(--bg1);
+  border:1px solid var(--border-hi); border-radius:var(--r-sm);
+  color:var(--t0); font-family:var(--ff-body); font-size:15px; font-weight:300;
+  outline:none; transition:border-color .2s;
+}
+.fg input:focus, .fg textarea:focus, .fg select:focus {
+  border-color:var(--brand);
+  box-shadow:0 0 0 3px rgba(39,170,225,.08);
+}
+.fg input::placeholder, .fg textarea::placeholder { color:var(--t2); }
+.fg textarea { min-height:130px; resize:vertical; }
+.fg select { appearance:none; -webkit-appearance:none; cursor:pointer; }
+.fg select option { background:var(--bg1); }
+.btn-sub {
+  padding:15px 28px; background:var(--brand); color:var(--bg0);
+  border:none; border-radius:var(--r-sm); font-family:var(--ff-body);
+  font-weight:600; font-size:15px; cursor:pointer; align-self:flex-start;
+  transition:all .2s;
+}
+.btn-sub:hover { background:#1e9dce; transform:translateY(-2px); box-shadow:0 10px 32px var(--brand-glow); }
+
+/* ── FOOTER ── */
+footer {
+  padding:56px 48px;
+  border-top:1px solid var(--border);
+}
+.footer-inner {
+  max-width:1240px; margin:0 auto;
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:24px;
+}
+.footer-brand { font-family:var(--ff-display); font-size:19px; font-weight:800; letter-spacing:-.03em; color:var(--t0); }
+.footer-brand b { color:var(--brand); }
+.footer-copy { font-family:var(--ff-body); font-size:11px; color:var(--t2); margin-top:6px; }
+.footer-links { display:flex; gap:32px; }
+.footer-links a { font-family:var(--ff-body); font-size:12px; color:var(--t1); text-decoration:none; transition:color .2s; letter-spacing:.04em; }
+.footer-links a:hover { color:var(--brand); }
+
+/* ── REVEAL ── */
+.rev {
+  opacity:0; transform:translateY(28px);
+  transition:opacity .7s ease, transform .7s ease;
+}
+.rev.on { opacity:1; transform:none; }
+.d1 { transition-delay:.1s; }
+.d2 { transition-delay:.2s; }
+.d3 { transition-delay:.3s; }
+.d4 { transition-delay:.4s; }
+
+/* ── MOBILE ── */
+@media (max-width:900px) {
+  nav { padding:0 24px; }
+  .nav-links li:not(:last-child) { display:none; }
+  .hero-content { padding:120px 24px 60px; }
+  .hero-metrics { gap:28px; }
+  .svc-grid { grid-template-columns:1fr; }
+  .stack-top { grid-template-columns:1fr; gap:36px; }
+  .stat-grid { grid-template-columns:repeat(2,1fr); }
+  .about-inner { grid-template-columns:1fr; }
+  .about-badge { display:none; }
+  .contact-grid { grid-template-columns:1fr; }
+  #services,#stats,#about,#contact { padding:80px 24px; }
+  #stack { padding:80px 24px; }
+  footer { padding:40px 24px; }
+  .footer-inner { flex-direction:column; align-items:flex-start; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-brand">
+    <img src="https://pixegon.com/images/site-navigation/logo.png" alt="Pixegon">
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#stack">Stack</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact" class="nav-cta">Start a Project</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <div class="hero-eyebrow-dot"></div>
+      Est. 2012 &nbsp;·&nbsp; Corrales, New Mexico
+    </div>
+    <h1>We Build Software<br>That <em>Outlasts</em><br>the Trend.</h1>
+    <p class="hero-sub">Builders of meaningful software. We partner with corporations, startups, and visionaries to craft web, mobile, and cloud products that last.</p>
+    <div class="hero-btns">
+      <a href="#services" class="btn-p">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        Explore Services
+      </a>
+      <a href="#contact" class="btn-s">Start a Conversation</a>
+    </div>
+    <div class="hero-metrics">
+      <div class="hm-item">
+        <div class="hm-num">15<span>+</span></div>
+        <div class="hm-lbl">Years in Business</div>
+      </div>
+      <div class="hm-item">
+        <div class="hm-num">20<span>+</span></div>
+        <div class="hm-lbl">Engineers</div>
+      </div>
+      <div class="hm-item">
+        <div class="hm-num">100<span>+</span></div>
+        <div class="hm-lbl">Projects Delivered</div>
+      </div>
+      <div class="hm-item">
+        <div class="hm-num">5<span>★</span></div>
+        <div class="hm-lbl">Client Rating</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLIENTS -->
+<section id="clients">
+  <p class="clients-lbl">Trusted by Industry Leaders</p>
+  <div class="marquee-outer">
+    <div class="marquee-track" id="mtrack">
+      <div class="client-chip"><span class="client-chip-name">Intel</span></div>
+      <div class="client-chip"><span class="client-chip-name">Tiffany &amp; Co.</span></div>
+      <div class="client-chip"><span class="client-chip-name">World Wildlife Fund</span></div>
+      <div class="client-chip"><span class="client-chip-name">CRU</span></div>
+      <div class="client-chip"><span class="client-chip-name">ABQ Balloon Fiesta</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-tag rev">Services</div>
+  <h2 class="rev d1">What We Build</h2>
+  <p class="section-lead rev d2">From concept to cloud — we own every layer of the stack with precision and craft.</p>
+  <div class="svc-grid">
+    <div class="svc-card rev">
+      <div class="svc-n">01</div>
+      <div class="svc-ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#27aae1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+        </svg>
+      </div>
+      <div class="svc-title">Web Development</div>
+      <p class="svc-desc">Custom, scalable web applications built with the right technology for your specific problem — not a template dressed up. From marketing platforms to enterprise systems.</p>
+      <div class="svc-chips">
+        <span class="chip">React</span><span class="chip">Angular</span>
+        <span class="chip">Node.js</span><span class="chip">PHP</span>
+        <span class="chip">Next.js</span><span class="chip">TypeScript</span>
+      </div>
+    </div>
+    <div class="svc-card rev d1">
+      <div class="svc-n">02</div>
+      <div class="svc-ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#27aae1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/>
+        </svg>
+      </div>
+      <div class="svc-title">Mobile Development</div>
+      <p class="svc-desc">Native iOS and Android apps, or cross-platform solutions built to the highest quality bar. Multi-device, multi-OS, built for performance and long-term maintainability.</p>
+      <div class="svc-chips">
+        <span class="chip">iOS / Swift</span><span class="chip">Android / Kotlin</span>
+        <span class="chip">React Native</span><span class="chip">Flutter</span>
+      </div>
+    </div>
+    <div class="svc-card rev d2">
+      <div class="svc-n">03</div>
+      <div class="svc-ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#27aae1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+          <polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>
+        </svg>
+      </div>
+      <div class="svc-title">Cloud &amp; Infrastructure</div>
+      <p class="svc-desc">Cloud-native architecture, DevOps pipelines, and infrastructure-as-code that scales with you. We architect for reliability, cost efficiency, and the future of your business.</p>
+      <div class="svc-chips">
+        <span class="chip">AWS</span><span class="chip">BigQuery</span>
+        <span class="chip">Docker</span><span class="chip">Kubernetes</span><span class="chip">Terraform</span>
+      </div>
+    </div>
+    <div class="svc-card rev d3">
+      <div class="svc-n">04</div>
+      <div class="svc-ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#27aae1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/>
+        </svg>
+      </div>
+      <div class="svc-title">UI/UX Design</div>
+      <p class="svc-desc">Interfaces grounded in user research and validated with real people. Discovery sessions, wireframes, interactive prototypes — and a design system that scales with your team.</p>
+      <div class="svc-chips">
+        <span class="chip">Discovery</span><span class="chip">Wireframing</span>
+        <span class="chip">Prototyping</span><span class="chip">Design Systems</span>
+      </div>
+    </div>
+    <div class="svc-card svc-full rev d4">
+      <div class="svc-n">05</div>
+      <div class="svc-ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#27aae1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1a7 7 0 0 1-7 7H9a7 7 0 0 1-7-7H1a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73A2 2 0 0 1 10 4a2 2 0 0 1 2-2z"/>
+          <circle cx="9" cy="14" r="1" fill="#27aae1"/><circle cx="15" cy="14" r="1" fill="#27aae1"/>
+        </svg>
+      </div>
+      <div class="svc-title">AI &amp; Intelligent Systems</div>
+      <p class="svc-desc">We integrate AI where it actually moves the needle — not as a buzzword, but as a force multiplier in your product. From wiring LLM APIs and building RAG pipelines to fine-tuning models and shipping AI-native features, we've done it at production scale. If you're evaluating where AI fits in your stack or need a team that can build it end to end, we're the call to make.</p>
+      <div class="svc-chips">
+        <span class="chip">Claude / OpenAI APIs</span><span class="chip">RAG Pipelines</span>
+        <span class="chip">Fine-tuning</span><span class="chip">LangChain / LlamaIndex</span>
+        <span class="chip">Embeddings &amp; Vector DBs</span><span class="chip">AI Agents</span>
+        <span class="chip">Model Evaluation</span><span class="chip">Prompt Engineering</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STACK -->
+<section id="stack">
+  <div class="stack-inner">
+    <div class="stack-top">
+      <div>
+        <div class="section-tag rev">Technology</div>
+        <h2 class="rev d1">Our Stack</h2>
+        <p class="section-lead no-mb rev d2">Language-agnostic, framework-fluent. Whatever the problem demands — we bring the right tools and the right people.</p>
+      </div>
+      <div class="code-snippet rev d1">
+        <div class="cs-comment">// Pixegon capability check</div>
+        <br>
+        <div><span class="cs-kw">const</span> pixegon = {</div>
+        <div style="padding-left:18px"><span class="cs-fn">experience</span>: <span class="cs-str">'15+ years'</span>,</div>
+        <div style="padding-left:18px"><span class="cs-fn">team</span>: <span class="cs-num">20</span>,</div>
+        <div style="padding-left:18px"><span class="cs-fn">stacks</span>: <span class="cs-str">'all of them'</span>,</div>
+        <div style="padding-left:18px"><span class="cs-fn">ai</span>: <span class="cs-str">'production-ready'</span>,</div>
+        <div style="padding-left:18px"><span class="cs-fn">location</span>: <span class="cs-str">'Corrales, NM'</span></div>
+        <div>}</div>
+      </div>
+    </div>
+    <div class="stack-cats">
+      <div class="rev">
+        <div class="stack-cat-lbl">Frontend</div>
+        <div class="pills">
+          <span class="pill hi">React</span>
+          <span class="pill hi">Angular</span>
+          <span class="pill">Vue.js</span>
+          <span class="pill">Next.js</span>
+          <span class="pill">TypeScript</span>
+          <span class="pill">Tailwind</span>
+          <span class="pill">SASS / SCSS</span>
+        </div>
+      </div>
+      <div class="rev d1">
+        <div class="stack-cat-lbl">Backend</div>
+        <div class="pills">
+          <span class="pill hi">Node.js</span>
+          <span class="pill hi">PHP</span>
+          <span class="pill">Python</span>
+          <span class="pill">Ruby on Rails</span>
+          <span class="pill">Go</span>
+          <span class="pill">Java / Spring</span>
+          <span class="pill">REST APIs</span>
+          <span class="pill">GraphQL</span>
+        </div>
+      </div>
+      <div class="rev d2">
+        <div class="stack-cat-lbl">Databases</div>
+        <div class="pills">
+          <span class="pill hi">MongoDB</span>
+          <span class="pill hi">PostgreSQL</span>
+          <span class="pill hi">MySQL</span>
+          <span class="pill hi2">BigQuery</span>
+          <span class="pill">Redis</span>
+          <span class="pill">Firebase</span>
+          <span class="pill">DynamoDB</span>
+          <span class="pill">Elasticsearch</span>
+        </div>
+      </div>
+      <div class="rev d3">
+        <div class="stack-cat-lbl">Cloud &amp; DevOps</div>
+        <div class="pills">
+          <span class="pill hi">AWS</span>
+          <span class="pill">Google Cloud</span>
+          <span class="pill">Azure</span>
+          <span class="pill">Docker</span>
+          <span class="pill">Kubernetes</span>
+          <span class="pill">Terraform</span>
+          <span class="pill">GitHub Actions</span>
+          <span class="pill">CircleCI</span>
+        </div>
+      </div>
+      <div class="rev d4">
+        <div class="stack-cat-lbl">Mobile</div>
+        <div class="pills">
+          <span class="pill hi">React Native</span>
+          <span class="pill">Swift / iOS</span>
+          <span class="pill">Kotlin / Android</span>
+          <span class="pill">Flutter</span>
+          <span class="pill">Expo</span>
+        </div>
+      </div>
+      <div class="rev d4">
+        <div class="stack-cat-lbl">AI &amp; Machine Learning</div>
+        <div class="pills">
+          <span class="pill hi">Claude API</span>
+          <span class="pill hi">OpenAI</span>
+          <span class="pill hi2">LangChain</span>
+          <span class="pill hi2">LlamaIndex</span>
+          <span class="pill">RAG</span>
+          <span class="pill">Fine-tuning</span>
+          <span class="pill">Pinecone</span>
+          <span class="pill">pgvector</span>
+          <span class="pill">Hugging Face</span>
+          <span class="pill">AI Agents</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-inner">
+    <div class="about-vis rev">
+      <div class="about-frame">
+        <!-- Circuit-board SVG visualization -->
+        <svg width="100%" height="100%" viewBox="0 0 600 450" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="pg" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1a2440" stroke-width="0.5"/>
+            </pattern>
+            <radialGradient id="rg" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#27aae1" stop-opacity="0.08"/>
+              <stop offset="100%" stop-color="transparent"/>
+            </radialGradient>
+          </defs>
+          <rect width="100%" height="100%" fill="#0c1220"/>
+          <rect width="100%" height="100%" fill="url(#pg)"/>
+          <rect width="100%" height="100%" fill="url(#rg)"/>
+          <!-- Circuit lines -->
+          <g stroke="#27aae1" stroke-width="1.5" fill="none" opacity="0.35">
+            <path d="M80 80 L180 80 L180 160 L280 160"/>
+            <circle cx="80" cy="80" r="5" fill="#27aae1"/>
+            <circle cx="280" cy="160" r="5" fill="#27aae1"/>
+            <path d="M420 320 L420 220 L520 220"/>
+            <circle cx="420" cy="320" r="5" fill="#27aae1"/>
+            <circle cx="520" cy="220" r="5" fill="#27aae1"/>
+            <path d="M120 360 L220 360 L220 280 L320 280"/>
+            <circle cx="120" cy="360" r="5" fill="#27aae1"/>
+            <path d="M360 80 L460 80 L460 140 L540 140"/>
+            <circle cx="360" cy="80" r="5" fill="#27aae1"/>
+            <path d="M80 220 L80 300 L160 300"/>
+            <circle cx="80" cy="220" r="5" fill="#27aae1"/>
+          </g>
+          <!-- Brand text -->
+          <text x="300" y="230" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="58" font-weight="800" fill="none" stroke="#243358" stroke-width="1" letter-spacing="-2">PIXEGON</text>
+          <text x="300" y="265" text-anchor="middle" font-family="Outfit, sans-serif" font-size="13" fill="#4a607a" letter-spacing="4">EST. 2012</text>
+        </svg>
+        <div class="about-loc">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+          </svg>
+          Corrales, New Mexico
+        </div>
+      </div>
+      <div class="about-badge">
+        <span class="about-badge-lbl">Founded</span>
+        <span class="about-badge-yr">2012</span>
+      </div>
+    </div>
+    <div>
+      <div class="section-tag rev">Our Story</div>
+      <h2 class="rev d1">More Than a<br>Code Factory</h2>
+      <p class="about-body rev d2">Brandon and Ashley Trebitowski started Treb Studios in Corrales, New Mexico in late 2012. What began as a two-person shop quickly grew as project after project exceeded expectations and a team of dedicated engineers came together.</p>
+      <p class="about-body rev d3">In 2015, the company became Pixegon — a name that reflects a bigger mission: helping corporations, startups, and visionaries build software that truly matters. For over 15 years, that's exactly what we've done.</p>
+      <div class="about-vals rev d4">
+        <div class="val">
+          <div class="val-dot"></div>
+          <div class="val-txt"><strong>Unwavering dedication</strong> — We don't ship half-measures. Every project gets our full attention, start to finish.</div>
+        </div>
+        <div class="val">
+          <div class="val-dot"></div>
+          <div class="val-txt"><strong>Compassionate collaboration</strong> — We listen first, then build. Your problem becomes our problem.</div>
+        </div>
+        <div class="val">
+          <div class="val-dot"></div>
+          <div class="val-txt"><strong>Innovative spirit</strong> — We pick the right tools for the job, not the trending ones.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-tag rev">Contact</div>
+  <h2 class="rev d1">Let's Build Something<br>Extraordinary</h2>
+  <div class="contact-grid">
+    <div class="rev d2">
+      <p class="contact-lead">Whether you have a fully-formed product spec or just a spark of an idea — we'd love to hear about it. Reach out and let's figure out what's possible together.</p>
+      <div class="cdet">
+        <span class="cdet-lbl">Email</span>
+        <span class="cdet-val"><a href="mailto:support@pixegon.com">support@pixegon.com</a></span>
+      </div>
+      <div class="cdet">
+        <span class="cdet-lbl">Phone</span>
+        <span class="cdet-val"><a href="tel:+15057508732">+1 (505) 750-8732</a></span>
+      </div>
+      <div class="cdet">
+        <span class="cdet-lbl">Location</span>
+        <span class="cdet-val">Corrales, New Mexico, USA</span>
+      </div>
+      <div class="cdet">
+        <span class="cdet-lbl">Availability</span>
+        <span class="cdet-val"><span class="status-dot"></span>Currently accepting new projects</span>
+      </div>
+    </div>
+    <form class="contact-form rev d3" onsubmit="handleSub(event)">
+      <div class="fg">
+        <label>Your Name</label>
+        <input type="text" placeholder="Jane Smith">
+      </div>
+      <div class="fg">
+        <label>Email Address</label>
+        <input type="email" placeholder="jane@company.com">
+      </div>
+      <div class="fg">
+        <label>Project Type</label>
+        <select>
+          <option value="" disabled selected>Select a service...</option>
+          <option>Web Application</option>
+          <option>Mobile App</option>
+          <option>Cloud / Infrastructure</option>
+          <option>UI/UX Design</option>
+          <option>Full-Stack Build</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label>Tell Us About Your Project</label>
+        <textarea placeholder="What are you building? What problem does it solve? What's your timeline?"></textarea>
+      </div>
+      <button type="submit" class="btn-sub" id="subBtn">Send Message →</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">PIXE<b>GON</b></div>
+      <div class="footer-copy">© 2026 Pixegon Inc. All rights reserved. · Corrales, New Mexico</div>
+    </div>
+    <div class="footer-links">
+      <a href="#services">Services</a>
+      <a href="#stack">Stack</a>
+      <a href="#about">About</a>
+      <a href="mailto:support@pixegon.com">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── NAV SCROLL ──
+const navEl = document.getElementById('nav');
+let ticking = false;
+window.addEventListener('scroll', () => {
+  if (!ticking) {
+    requestAnimationFrame(() => {
+      navEl.classList.toggle('scrolled', scrollY > 40);
+      ticking = false;
+    });
+    ticking = true;
+  }
+});
+
+// ── REVEAL ──
+const obs = new IntersectionObserver((entries, observer) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('on');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.rev').forEach(el => obs.observe(el));
+
+// ── MARQUEE DUPLICATE ──
+const mt = document.getElementById('mtrack');
+mt.innerHTML = mt.innerHTML + mt.innerHTML;
+
+// ── FORM ──
+function handleSub(e) {
+  e.preventDefault();
+  const b = document.getElementById('subBtn');
+  b.textContent = 'Sent! We\'ll be in touch ✓';
+  b.style.background = 'var(--green)';
+  b.style.color = 'var(--bg0)';
+  setTimeout(() => {
+    b.textContent = 'Send Message →';
+    b.style.background = 'var(--brand)';
+    e.target.reset();
+  }, 4000);
+}
+</script>
+</body>
+</html>

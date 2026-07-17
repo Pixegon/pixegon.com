@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Astro cache
+.astro/
+
+# OS files
+.DS_Store
+
+# Local tool settings
+.claude/settings.local.json
+
+# Netlify local folder
+.netlify/

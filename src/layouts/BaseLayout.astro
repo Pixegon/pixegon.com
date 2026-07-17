@@ -1,0 +1,103 @@
+---
+import "../styles/fonts.css";
+import "../styles/site.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Pixegon — Custom Software Development | Web, Mobile, Cloud & AI",
+  description = "Pixegon builds meaningful software that outlasts the trend. Custom web, mobile, cloud, and AI development for corporations, startups, and visionaries. Based in Corrales, New Mexico since 2012.",
+} = Astro.props;
+
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: "Pixegon",
+  alternateName: "Pixegon Inc.",
+  url: "https://pixegon.com/",
+  email: "support@pixegon.com",
+  telephone: "+1-505-750-8732",
+  foundingDate: "2012",
+  founders: [
+    { "@type": "Person", name: "Brandon Trebitowski" },
+    { "@type": "Person", name: "Ashley Trebitowski" },
+  ],
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Corrales",
+    addressRegion: "NM",
+    addressCountry: "US",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 35.2378,
+    longitude: -106.6067,
+  },
+  description:
+    "Custom software development company building web, mobile, cloud, and AI products for corporations, startups, and visionaries.",
+  knowsAbout: [
+    "Web Development",
+    "Mobile Development",
+    "Cloud Infrastructure",
+    "UI/UX Design",
+    "AI Development",
+  ],
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta
+      name="keywords"
+      content="custom software development, web development, mobile app development, cloud infrastructure, AI development, UI/UX design, New Mexico software company"
+    />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#050912" />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Pixegon" />
+    <meta
+      property="og:title"
+      content="Pixegon — We Build Software That Outlasts the Trend"
+    />
+    <meta
+      property="og:description"
+      content="Custom web, mobile, cloud, and AI development for corporations, startups, and visionaries. 15+ years, 100+ projects delivered."
+    />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:locale" content="en_US" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="twitter:title"
+      content="Pixegon — We Build Software That Outlasts the Trend"
+    />
+    <meta
+      name="twitter:description"
+      content="Custom web, mobile, cloud, and AI development for corporations, startups, and visionaries."
+    />
+
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(structuredData)}
+    />
+    <script is:inline>
+      document.documentElement.classList.add("js");
+    </script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

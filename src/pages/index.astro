@@ -1,0 +1,26 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteMarkup from "../components/SiteMarkup.astro";
+---
+
+<BaseLayout>
+  <div id="dc-root">
+    <div class="sc-host">
+      <SiteMarkup />
+    </div>
+  </div>
+
+  <script>
+    import { initSiteController } from "../scripts/site-controller";
+
+    const root = document.querySelector<HTMLElement>("#top");
+
+    if (root) {
+      initSiteController(root, {
+        motion: "cinematic",
+        asciiDensity: 1.4,
+        glowStrength: 0.7,
+      });
+    }
+  </script>
+</BaseLayout>
